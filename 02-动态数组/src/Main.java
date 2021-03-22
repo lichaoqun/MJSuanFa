@@ -3,7 +3,16 @@
 public class Main {
 
 	public static void main(String[] args) {
+		int i1 = 0;
+		while (i1++ < 10) {
+			System.out.println(i1);
+		}
 		
+		int i2 = 0;
+		while (++i2 < 10) {
+			System.out.println(i2);
+		}
+
 		// - Person类型
 		ArrayList <Person> personArrayList = new ArrayList<>();
 		personArrayList.add(new Person(10, "Jack"));

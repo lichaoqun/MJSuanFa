@@ -108,6 +108,11 @@ public class ArrayList <E> {
 		// - 以下是个简单写法
 //		this.setToNil(--mSize);
 	}
+	
+	// - 删除某个元素
+	public void remove(E element) {
+		this.remove(indexOf(element));
+	}
 
 	// - 获取指定元素的下标 并适配null的情况
 	public int indexOf(E element) {
