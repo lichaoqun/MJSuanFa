@@ -23,8 +23,11 @@ public class Person {
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub
-		Person person = (Person) obj;
-		return (person.mName == this.mName && person.mAge == this.mAge);
+		if (obj instanceof Person) {
+			Person person = (Person) obj;
+			return (person.mName == this.mName && person.mAge == this.mAge);	
+			}		
+		return false;
 	}
 	
 }
