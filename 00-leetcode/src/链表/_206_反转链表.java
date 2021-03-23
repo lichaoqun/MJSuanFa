@@ -1,0 +1,28 @@
+package 链表;
+/*
+ * https://leetcode-cn.com/problems/reverse-linked-list/submissions/
+ * */
+public class _206_反转链表 {
+	public ListNode reverseList(ListNode head) {
+		if (head == null || head.next == null) return head;
+		ListNode newHead = reverseList(head.next);
+		head.next.next = head;
+		head.next = null;
+		return newHead;
+    }
+	public static void main(String[] args) {
+    	ListNode l1 = new ListNode(1);
+    	ListNode l2 = new ListNode(2);
+    	ListNode l3 = new ListNode(3);
+    	ListNode l4 = new ListNode(4);
+    	l1.next = l2;
+    	l2.next = l3;
+    	l3.next = l4;
+    	l4.next = null;
+    	
+    	_206_反转链表 s = new _206_反转链表();
+		System.out.println(l1.val + "," + l1.next.val + "," + l1.next.next.val + "," + l1.next.next.next.val);
+		l1 = s.reverseList(l1);
+		System.out.println(l1.val + "," + l1.next.val + "," + l1.next.next.val + "," + l1.next.next.next.val);
+	}
+}
