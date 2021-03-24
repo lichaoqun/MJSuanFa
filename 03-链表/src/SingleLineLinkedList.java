@@ -12,11 +12,6 @@ public class SingleLineLinkedList <E> extends AbstractList<E>{
 	}
 	
 	private Node <E> first;
-	
-	public SingleLineLinkedList() {
-		// TODO Auto-generated constructor stub
-		first = new Node<>(null, null);
-	}
 
 	@Override
 	public void clear() {
@@ -46,7 +41,12 @@ public class SingleLineLinkedList <E> extends AbstractList<E>{
 	public void add(int index, E element) {
 		// TODO Auto-generated method stub
 		checkIndexForAdd(index);
-		Node<E>prev = (index ==0) ? first : node(index - 1);
+		if (index ==0) {
+			first = new Node<>(element, first);
+			size++;
+			return;
+		}
+		Node<E>prev = node(index - 1);
 		prev.next = new Node<>(element, prev.next);
 		size++;
 	}
@@ -54,7 +54,12 @@ public class SingleLineLinkedList <E> extends AbstractList<E>{
 	@Override 
 	public void remove(int index) {
 		// TODO Auto-generated method stub 
-		Node<E>prev = (index ==0) ? first : node(index - 1);
+		if (index == 0) {
+			first = first.next;
+			size--;
+			return;
+		}
+		Node<E>prev = node(index - 1);
 		prev.next = prev.next.next;
 		size--;
 	}
@@ -78,8 +83,7 @@ public class SingleLineLinkedList <E> extends AbstractList<E>{
 	}
 	
 	private Node<E> node(int index) {
-		checkIndex(index);
-		Node<E> node = first.next;
+		Node<E> node = first;
 		for (int i = 0; i < index; i++) {
 			node = node.next;
 		}
@@ -90,7 +94,7 @@ public class SingleLineLinkedList <E> extends AbstractList<E>{
 		// TODO Auto-generated method stub
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("size = " + size + "; " + "elements = " + "[");
-		Node<E> node = first.next;
+		Node<E> node = first;
 		for (int i = 0; i < size; i++) {
 			if (i != 0 ) stringBuilder.append(", ");
 			stringBuilder.append(node.element);
