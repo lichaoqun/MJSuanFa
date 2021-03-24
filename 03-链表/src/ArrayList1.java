@@ -1,22 +1,27 @@
 
 
-public class ArrayList <E> extends AbstractList<E> {
+public class ArrayList1 <E> extends AbstractList<E> {
 	
 	// - 数组的元素地址
 	private E[] elements;
 	
+	// - 默认开辟的存储空间
 	private static final int DEFAULT_CAPATICY = 10;
 	
-	public ArrayList() {
+	// - 初始化设置
+	public ArrayList1() {
 		this(DEFAULT_CAPATICY);
 	} 
-	
-	public ArrayList(int capaticy) {
+	public ArrayList1(int capaticy) {
 		capaticy = Math.max(capaticy, DEFAULT_CAPATICY);
 		this.expansionCapacity(capaticy);
 	}
 
-	@SuppressWarnings("unchecked")
+	
+	private void setToNil(int index) {
+		elements[index] = null;
+	}
+	
 	private void expansionCapacity(int capacity) {
 		int oldCapacity = (elements == null) ? 0 : elements.length;
 
@@ -24,7 +29,7 @@ public class ArrayList <E> extends AbstractList<E> {
 		if (oldCapacity >= capacity) return;
 
 		// - 扩容 (新容量是就容量的1.5倍)这里用右移是因为浮点型运算的性能损耗比右移的性能损耗高;
-		int newCapacity = (oldCapacity == 0) ? 10 : (oldCapacity + (oldCapacity >> 1));
+		int newCapacity = Math.max(DEFAULT_CAPATICY, oldCapacity + (oldCapacity >> 1));
 		E[] newElements = (E[])new Object[newCapacity];
 		for (int i = 0; i < size; i++) {
 			newElements[i] = elements[i];
@@ -41,11 +46,6 @@ public class ArrayList <E> extends AbstractList<E> {
 		size = 0;
 	}
 	
-	private void setToNil(int index) {
-		elements[index] = null;
-	}
-	
-	
 	// - 获取指定下标的元素
 	public E get(int index) {
 		this.checkIndex(index);
@@ -54,14 +54,19 @@ public class ArrayList <E> extends AbstractList<E> {
 	
 	// - 替换指定下标的元素
 	public void set(int index, E element) {
+		checkIndex(index);
 		elements[index] = element;
 	}
 	
 	// - 添加某个元素
 	public void add(int index, E element) {
+		checkIndexForAdd(index);
+		
+		// - 开辟空间
 		this.expansionCapacity(size + 1);
+		
+		// - 移动元素
 		for (int i = size; i > index; i--) {
-			System.out.println("tet");
 			elements[i] = elements[i-1];
 		}
 		elements[index] = element;
@@ -70,6 +75,9 @@ public class ArrayList <E> extends AbstractList<E> {
 	
 	// - 删除某个元素
 	public void remove(int index) {
+		checkIndex(index);
+		
+		// - 移动元素
 		for (int i = (index + 1); i < size; i++) {
 			elements[i-1] = elements[i];
 		}
@@ -79,11 +87,6 @@ public class ArrayList <E> extends AbstractList<E> {
 		
 		// - 以下是个简单写法
 //		this.setToNil(--size);
-	}
-	
-	// - 删除某个元素
-	public void remove(E element) {
-		this.remove(indexOf(element));
 	}
 
 	// - 获取指定元素的下标 并适配null的情况

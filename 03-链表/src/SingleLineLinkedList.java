@@ -1,19 +1,22 @@
 
-
-public class LinkedList <E> extends AbstractList<E>{
+public class SingleLineLinkedList <E> extends AbstractList<E>{
 	
 	private static class Node <E> {
 		E element;
 		Node <E> next;
-		public Node(E element, LinkedList.Node<E> next) {
+		public Node(E element, SingleLineLinkedList.Node<E> next) {
 			super();
 			this.element = element;
 			this.next = next;
-		}
-		
+		}		
 	}
 	
 	private Node <E> first;
+	
+	public SingleLineLinkedList() {
+		// TODO Auto-generated constructor stub
+		first = new Node<>(null, null);
+	}
 
 	@Override
 	public void clear() {
@@ -26,6 +29,7 @@ public class LinkedList <E> extends AbstractList<E>{
 	@Override
 	public E get(int index) {
 		// TODO Auto-generated method stub
+		checkIndex(index);
 		Node<E> node = node(index);
 		return node.element;
 	}
@@ -33,6 +37,7 @@ public class LinkedList <E> extends AbstractList<E>{
 	@Override
 	public void set(int index, E element) {
 		// TODO Auto-generated method stub
+		checkIndex(index);
 		Node<E> node = node(index);
 		node.element = element;
 	}
@@ -40,12 +45,8 @@ public class LinkedList <E> extends AbstractList<E>{
 	@Override
 	public void add(int index, E element) {
 		// TODO Auto-generated method stub
-		if (index ==0) {
-			first = new Node<>(element, first);
-			size++;
-			return;
-		}
-		Node<E>prev = node(index - 1);
+		checkIndexForAdd(index);
+		Node<E>prev = (index ==0) ? first : node(index - 1);
 		prev.next = new Node<>(element, prev.next);
 		size++;
 	}
@@ -53,12 +54,7 @@ public class LinkedList <E> extends AbstractList<E>{
 	@Override 
 	public void remove(int index) {
 		// TODO Auto-generated method stub 
-		if (index == 0) {
-			first = first.next;
-			size--;
-			return;
-		}
-		Node<E>prev = node(index - 1);
+		Node<E>prev = (index ==0) ? first : node(index - 1);
 		prev.next = prev.next.next;
 		size--;
 	}
@@ -82,7 +78,8 @@ public class LinkedList <E> extends AbstractList<E>{
 	}
 	
 	private Node<E> node(int index) {
-		Node<E> node = first;
+		checkIndex(index);
+		Node<E> node = first.next;
 		for (int i = 0; i < index; i++) {
 			node = node.next;
 		}
@@ -93,7 +90,7 @@ public class LinkedList <E> extends AbstractList<E>{
 		// TODO Auto-generated method stub
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("size = " + size + "; " + "elements = " + "[");
-		Node<E> node = first;
+		Node<E> node = first.next;
 		for (int i = 0; i < size; i++) {
 			if (i != 0 ) stringBuilder.append(", ");
 			stringBuilder.append(node.element);

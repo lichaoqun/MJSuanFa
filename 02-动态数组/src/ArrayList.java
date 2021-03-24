@@ -28,7 +28,7 @@ public class ArrayList <E> {
 	private void setToNil(int index) {
 		mElements[index] = null;
 	}
-	@SuppressWarnings("unchecked")
+
 	private void expansionCapacity(int capacity) {
 		int oldCapacity = (mElements == null) ? 0 : mElements.length;
 
@@ -36,7 +36,7 @@ public class ArrayList <E> {
 		if (oldCapacity >= capacity) return;
 
 		// - 扩容 (新容量是就容量的1.5倍)这里用右移是因为浮点型运算的性能损耗比右移的性能损耗高;
-		int newCapacity = (oldCapacity == 0) ? 10 : (oldCapacity + (oldCapacity >> 1));
+		int newCapacity = Math.max(DEFAULT_CAPATICY, oldCapacity + (oldCapacity >> 1));
 		E[] newElements = (E[])new Object[newCapacity];
 		for (int i = 0; i < mSize; i++) {
 			newElements[i] = mElements[i];

@@ -1,12 +1,22 @@
 
-abstract public class AbstractList <E> implements List<E>{
+public abstract class AbstractList <E> implements List<E>{
+	
+	// - 长度的成员变量
 	protected int size;
 	
+	// - 判断越界问题
 	public void checkIndex(int index) {
 		if (index >= size || index < 0) {
 			throw new IndexOutOfBoundsException("index is: " + index + ", size is: " + size);
 		}
 	}
+	// - 判断越界问题
+	public void checkIndexForAdd(int index) {
+		if (index < 0 || index > size)  {
+			throw new IndexOutOfBoundsException("index is: " + index + ", size is: " + size);
+		}
+	}
+	
 	// - 数组长度
 	public int size() {
 		return size;
