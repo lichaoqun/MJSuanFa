@@ -1,3 +1,4 @@
+import java.util.Iterator;
 
 public class TwoLineLinkedList <E> extends AbstractList<E>{
 	
@@ -21,6 +22,7 @@ public class TwoLineLinkedList <E> extends AbstractList<E>{
 		// TODO Auto-generated method stub
 		size = 0;
 		first = null;
+		last = null;
 	}
 
 
@@ -86,11 +88,22 @@ public class TwoLineLinkedList <E> extends AbstractList<E>{
 	}
 	
 	private Node<E> node(int index) {
-		Node<E> node = first;
-		for (int i = 0; i < index; i++) {
-			node = node.next;
+		checkIndex(index);
+		// - 查找的坐标 < 长度的一半, 从前遍历, 否则从后遍历
+		// - 从前往后遍历
+		if (index < (size >> 1)) {
+			Node <E> node = first;
+			for (int i = 0; i < index; i++) {
+				node = node.next;
+			}
+			return node;
+		}else{ // - 从后往前遍历
+			Node<E> node = last;
+			for (int i = size - 1; i > index; i--) {
+				node = node.prev;
+			}
+			return node;
 		}
-		return node;
 	}
 	
 	public String toString() {
