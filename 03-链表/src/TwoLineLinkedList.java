@@ -1,4 +1,4 @@
-import java.util.Iterator;
+
 
 public class TwoLineLinkedList <E> extends AbstractList<E>{
 	
@@ -6,7 +6,7 @@ public class TwoLineLinkedList <E> extends AbstractList<E>{
 		E element;
 		Node <E> next;
 		Node <E> prev;
-		public Node(TwoLineLinkedList.Node<E> prev, E element, TwoLineLinkedList.Node<E> next) {
+		public Node(Node<E> prev, E element, Node<E> next) {
 			super();
 			this.element = element;
 			this.next = next;
@@ -46,26 +46,52 @@ public class TwoLineLinkedList <E> extends AbstractList<E>{
 	public void add(int index, E element) {
 		// TODO Auto-generated method stub
 		checkIndexForAdd(index);
-		if (index ==0) {
-			first = new Node<>(element, first);
+		
+		// - 当前链表没有元素
+		if (size == 0) {
+			Node<E> node = new Node<>(null, element, null);
+			first = last = node;
 			size++;
 			return;
 		}
-		Node<E>prev = node(index - 1);
-		prev.next = new Node<>(element, prev.next);
+
+		if (index == 0) {// - 插入在头部
+			Node<E> oldFirst = first;
+			first = new Node<>(null, element, oldFirst);
+			oldFirst.prev = first;
+		}else if (index == size) { // - 插入在尾部
+			Node<E> oldLast = last;
+			last = new Node<>(oldLast, element, null);
+			oldLast.next = last;
+		} else {// - 插入在中间
+			Node<E> next = node(index);
+			Node<E> prev = next.prev;
+			Node<E> node = new Node<>(prev, element, next);
+			next.prev = node;
+			prev.next = node;
+			
+		}
 		size++;
 	}
 
 	@Override 
 	public void remove(int index) {
-		// TODO Auto-generated method stub 
-		if (index == 0) {
-			first = first.next;
-			size--;
-			return;
+		checkIndex(index);
+		Node<E> node = node(index);
+		Node<E> next = node.next;
+		Node<E> prev = node.prev;
+		
+		if (index == 0) { // - 删除头部
+			next.prev = null;
+			first = next;
+		}else if (index == size) { // - 删除尾部
+			prev.next = null;
+			last = prev;
+		}else { // - 删除中间
+			prev.next = next;
+			next.prev = prev;
 		}
-		Node<E>prev = node(index - 1);
-		prev.next = prev.next.next;
+
 		size--;
 	}
 
