@@ -1,4 +1,3 @@
-import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 
 public class TwoCircleLinkedList <E> extends AbstractList<E>{
 	
