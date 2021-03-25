@@ -5,9 +5,7 @@ package 链表;
 public class _203_移除链表元素 {
 
 	// - 迭代方法移除链表元素
-    public ListNode removeElements(ListNode head, int val) {
-    if (true) { return removeElements2(head, val); } 
-    	
+    public ListNode removeElements(ListNode head, int val) {    	
     	ListNode lastNode = head;
     	ListNode newHead = null;
     	while (head != null) {
