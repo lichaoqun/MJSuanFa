@@ -5,7 +5,7 @@ public class SingleCircleLinkedList <E> extends AbstractList<E>{
 	private static class Node <E> {
 		E element;
 		Node <E> next;
-		public Node(E element, SingleCircleLinkedList.Node<E> next) {
+		public Node(E element, Node<E> next) {
 			super();
 			this.element = element;
 			this.next = next;

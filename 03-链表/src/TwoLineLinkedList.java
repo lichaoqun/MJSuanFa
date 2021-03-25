@@ -67,9 +67,7 @@ public class TwoLineLinkedList <E> extends AbstractList<E>{
 			Node<E> next = node(index);
 			Node<E> prev = next.prev;
 			Node<E> node = new Node<>(prev, element, next);
-			next.prev = node;
-			prev.next = node;
-			
+			next.prev = prev.next = node;
 		}
 		size++;
 	}

@@ -12,12 +12,12 @@ public class ArrayList2 <E> extends AbstractList<E> {
 	public ArrayList2() {
 		this(DEFAULT_CAPATICY);
 	} 
+	
 	public ArrayList2(int capaticy) {
 		capaticy = Math.max(capaticy, DEFAULT_CAPATICY);
 		this.expansionCapacity(capaticy);
 	}
 
-	
 	private void setToNil(int index) {
 		elements[index] = null;
 	}

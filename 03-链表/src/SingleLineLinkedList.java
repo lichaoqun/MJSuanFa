@@ -4,7 +4,7 @@ public class SingleLineLinkedList <E> extends AbstractList<E>{
 	private static class Node <E> {
 		E element;
 		Node <E> next;
-		public Node(E element, SingleLineLinkedList.Node<E> next) {
+		public Node(E element, Node<E> next) {
 			super();
 			this.element = element;
 			this.next = next;
@@ -19,7 +19,6 @@ public class SingleLineLinkedList <E> extends AbstractList<E>{
 		size = 0;
 		first = null;
 	}
-
 
 	@Override
 	public E get(int index) {
@@ -43,11 +42,10 @@ public class SingleLineLinkedList <E> extends AbstractList<E>{
 		checkIndexForAdd(index);
 		if (index ==0) {
 			first = new Node<>(element, first);
-			size++;
-			return;
+		}else {
+			Node<E>prev = node(index - 1);
+			prev.next = new Node<>(element, prev.next);
 		}
-		Node<E>prev = node(index - 1);
-		prev.next = new Node<>(element, prev.next);
 		size++;
 	}
 
