@@ -89,7 +89,6 @@ public class TwoLineLinkedList <E> extends AbstractList<E>{
 			prev.next = next;
 			next.prev = prev;
 		}
-
 		size--;
 	}
 
