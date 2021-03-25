@@ -1,5 +1,7 @@
 package 链表;
-
+/*
+ * https://leetcode-cn.com/problems/convert-binary-number-in-a-linked-list-to-integer/
+ * */
 public class _1290_二进制链表转整数 {
 	private int count = 1;
 	public int getDecimalValue(ListNode head) {
