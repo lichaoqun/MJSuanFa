@@ -5,27 +5,26 @@ package 链表;
 
 /**
  * @author lichaoqun
- * https://leetcode-cn.com/problems/intersection-of-two-linked-lists-lcci/
+ * https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/
  */
-public class _面试题_02_07_链表相交 {
-	
+public class _剑指Offer_52_两个链表的第一个公共节点 {
+
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if (headA == null || headB == null) return null;
-        ListNode pA = headA;
-        ListNode pB = headB;
-        while (pA != pB) {
-			pA = (pA == null) ? headB : pA.next;
-			pB = (pB == null) ? headA : pB.next;
+    	if (headA == null || headB == null) return null;
+    	ListNode pA = headA;
+    	ListNode pB = headB;
+    	while (pA != pB) {
+			pA = (pA != null) ? pA.next : headB;
+			pB = (pB != null) ? pB.next : headA;
 		}
         return pA;
     }
-
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		_面试题_02_07_链表相交 s = new _面试题_02_07_链表相交();
+		_剑指Offer_52_两个链表的第一个公共节点 s = new _剑指Offer_52_两个链表的第一个公共节点();
 		
 		ListNode l1 = new ListNode(0);
     	ListNode l2 = new ListNode(9);
