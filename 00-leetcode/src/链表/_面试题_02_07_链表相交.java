@@ -15,12 +15,11 @@ public class _面试题_02_07_链表相交 {
         ListNode pA = headA;
         ListNode pB = headB;
         
-        while (pA != null && pB != null) {
-			if (pA == pB) return pA;
-			pA = (pA.next == null) ? pB : pA.next;
-			pB = (pB.next == null) ? pA : pB.next;
+        while (pA != pB) {
+			pA = (pA == null) ? headB : pA.next;
+			pB = (pB == null) ? headA : pB.next;
 		}
-        return null;
+        return pA;
     }
 
 	/**
