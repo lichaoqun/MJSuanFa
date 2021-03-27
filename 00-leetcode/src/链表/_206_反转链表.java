@@ -32,11 +32,9 @@ public class _206_反转链表 {
     	l1.next = l2;
     	l2.next = l3;
     	l3.next = l4;
-    	l4.next = null;
     	
     	_206_反转链表 s = new _206_反转链表();
-		System.out.println(l1.val + "," + l1.next.val + "," + l1.next.next.val + "," + l1.next.next.next.val);
-		l1 = s.reverseList2(l1);
-		System.out.println(l1.val + "," + l1.next.val + "," + l1.next.next.val + "," + l1.next.next.next.val);
+		System.out.println(l1);
+		System.out.println(s.reverseList2(l2));
 	}
 }
