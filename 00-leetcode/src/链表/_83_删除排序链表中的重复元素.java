@@ -5,22 +5,18 @@ package 链表;
 public class _83_删除排序链表中的重复元素 {
 
 	public ListNode deleteDuplicates(ListNode head) {
-		ListNode lastNode = null;
-		ListNode curNode = head;
-
-		while (curNode != null) {
-			if (lastNode == null) {
-				lastNode = curNode;
-			}else {
-				if (lastNode.val == curNode.val) {
-					lastNode.next = curNode.next;
-				}else {
-					lastNode = curNode;
-				}
+		
+		ListNode newHead = new ListNode(1000);
+		ListNode lastNode = newHead;
+		while (head != null) {
+			lastNode.next = null;
+			if (head.val != lastNode.val) {
+				lastNode.next = head;
+				lastNode = lastNode.next;
 			}
-			curNode = curNode.next;
+			head = head.next;
 		}
-		return head;
+		return newHead.next;
     }
 	
 	public ListNode deleteDuplicates1(ListNode head) {

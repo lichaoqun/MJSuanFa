@@ -8,19 +8,18 @@ package 链表;
  * https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof/
  */
 public class _剑指Offer_18_删除链表的节点 {
-	public ListNode deleteNode(ListNode head, int val) {
-		ListNode virtualHead = new ListNode(0);
-		ListNode lastNode = virtualHead;
-		while (head != null) {
-			if (head.val != val) {
-				lastNode.next = head;
-				lastNode = head;
-			}else {
-				lastNode.next = null;
+	public ListNode deleteNode(ListNode head, int val) {    	
+    	ListNode newHead = new ListNode(0);
+    	ListNode lastNode = newHead;
+    	while (head != null) {
+    		lastNode.next = null;
+    		if (head.val != val) {
+    			lastNode.next = head;
+    			lastNode = lastNode.next;
 			}
-			head = head.next;
+    		head = head.next;
 		}
-		return virtualHead.next;
+    	return newHead.next;
     }
 	/**
 	 * @param args

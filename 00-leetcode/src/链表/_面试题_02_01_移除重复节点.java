@@ -15,11 +15,10 @@ public class _面试题_02_01_移除重复节点 {
     	ListNode virtualHeadListNode = new ListNode(0);
     	ListNode lastNode = virtualHeadListNode;
     	while (head != null) {
+			lastNode.next = null;
 			if (!nodesArrayList.contains(head.val)) {
 				lastNode.next = head;
-				lastNode = head;
-			}else {
-				lastNode.next = null;
+				lastNode = lastNode.next;
 			}
 			nodesArrayList.add(head.val);
 			head = head.next;

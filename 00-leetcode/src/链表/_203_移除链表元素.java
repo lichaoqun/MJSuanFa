@@ -4,27 +4,25 @@ package 链表;
  */
 public class _203_移除链表元素 {
 
-	// - 迭代方法移除链表元素
+	// - 迭代方法移除链表元素使用虚拟头结点
     public ListNode removeElements(ListNode head, int val) {    	
-    	ListNode lastNode = head;
-    	ListNode newHead = null;
+    	ListNode newHead = new ListNode(0);
+    	ListNode lastNode = newHead;
     	while (head != null) {
-    		if (head.val == val) {
-    			lastNode.next = head.next;
-			}else {
-				if (newHead == null) newHead = head;
-				lastNode = head;
+    		lastNode.next = null;
+    		if (head.val != val) {
+    			lastNode.next = head;
+    			lastNode = lastNode.next;
 			}
     		head = head.next;
 		}
-    	return newHead;
+    	return newHead.next;
     }
 
     // - 递归方法移除链表元素
     public ListNode removeElements1(ListNode head, int val) {
     	ListNode node = recursiveGetHead(head, val);
-    	if (node == null) return node;
-    	if (node.val == val) return node.next;
+    	if (node != null && node.val == val) return node.next;
     	return node;
     }
     public ListNode recursiveGetHead(ListNode head, int val) {

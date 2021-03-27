@@ -8,11 +8,11 @@ public class _141_环形链表 {
 	public boolean hasCycle(ListNode head) {
 		if (head == null || head.next == null) return false;
 		ListNode slowNode = head;
-		ListNode fastNode = head.next;
+		ListNode fastNode = head;
 		while (fastNode != null && fastNode.next != null) {
-			if (fastNode == slowNode) return true;
 			slowNode = slowNode.next;
 			fastNode = fastNode.next.next;
+			if (fastNode == slowNode) return true;
 		}
 		return false;
     }
