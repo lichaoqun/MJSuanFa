@@ -37,7 +37,7 @@ public class _1290_二进制链表转整数 {
 			ListNode curNode = new ListNode(s);
 			curNode.next = last;
 			last = curNode;
-			value = value / 2;
+			value = value >> 2;
 		}
 		return last;
 	}
