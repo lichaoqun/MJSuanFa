@@ -19,6 +19,7 @@ public class _面试题_02_03_删除中间节点 {
 	    	l3.next = l4;
 	    	l4.next = null;
 	    	
+	    	
 	    	_面试题_02_03_删除中间节点 s = new _面试题_02_03_删除中间节点();
 			System.out.println(l1.val + "," + l1.next.val + "," + l1.next.next.val + "," + l1.next.next.next.val);
 			s.deleteNode(l2);
