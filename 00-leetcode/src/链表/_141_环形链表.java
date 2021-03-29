@@ -23,8 +23,7 @@ public class _141_环形链表 {
 		if (head.val == 0x0abce) return true;
 		
 		head.val = 0x0abce;
-		return hasCycle2(head.next);
-		
+		return hasCycle2(head.next);		
     }
 	
 	public static void main(String[] args) {

@@ -43,12 +43,15 @@ public class _面试题_02_02_返回倒数第k个节点 {
 	        ListNode p = head;
 	        ListNode q = head;
 	        for (int i = 0; q != null; i++) {
-             if(i < k){
-	                q = q.next;
-                 continue;
-             }
-             q = q.next;
-	            p = p.next;
+	        	// - 以下两种写法都可以
+//	             q = q.next;
+//	             if(i < k)continue;
+//	             p = p.next;
+	        	
+	        	 q = q.next;
+	             if(i >= k) {;
+	             	p = p.next;
+	             }
 	        }
 	        return p.val;
  }

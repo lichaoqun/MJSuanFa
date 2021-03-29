@@ -73,15 +73,13 @@ public class _234_回文链表 {
     		// - 翻转链表
     		slowListNode.next = lastNode;
     		lastNode = slowListNode;
-    		
-    		// - 保存前半部分链表的头结点
-    		beforeHalfList = lastNode;
-    		
+    		    		
     		// - 快慢指针前进
 			slowListNode = tempSlowListNode;
 			fastListNode = tempFastListNode;
 			
-			// - 保存后半部分链表的头结点(如果已经遍历到链表的尾结点, 并且链表长度为奇数, 应该将头结点的位置向后移动 (1->2->1) 也是回文链表)
+			// - 保存前半部分链表的头结点和后半部分链表的头结点(如果已经遍历到链表的尾结点, 并且链表长度为奇数, 应该将头结点的位置向后移动 (1->2->1) 也是回文链表)
+    		beforeHalfList = lastNode;
 			aferHalfList = slowListNode;
 			if (fastListNode != null && fastListNode.next == null) {
 				aferHalfList = aferHalfList.next;
