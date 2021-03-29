@@ -21,7 +21,6 @@ public class SingleCircleLinkedList <E> extends AbstractList<E>{
 		first = null;
 	}
 
-
 	@Override
 	public E get(int index) {
 		// TODO Auto-generated method stub
@@ -54,11 +53,11 @@ public class SingleCircleLinkedList <E> extends AbstractList<E>{
 		
 		if (index == 0) { // - 头部插入
 			Node <E> newFirst = new Node<>(element, first);
-			Node<E> last = node(index - 1);
+			Node<E> last = node(size - 1);
 			last.next = first = newFirst;
 		}else if (index == size){// - 尾部插入
-			Node<E> oldLast = node(index - 1);
-			Node <E> newLast = new Node<>(element, oldLast.next);
+			Node<E> oldLast = node(size - 1);
+			Node <E> newLast = new Node<>(element, first);
 			oldLast.next = newLast;
 		}else {// - 中间插入
 			Node<E> prev = node(index - 1);
