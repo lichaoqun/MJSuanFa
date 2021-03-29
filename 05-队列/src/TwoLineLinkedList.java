@@ -1,5 +1,6 @@
 
-public class TwoCircleLinkedList <E> extends AbstractList<E>{
+
+public class TwoLineLinkedList <E> extends AbstractList<E>{
 	
 	private static class Node <E> {
 		E element;
@@ -49,7 +50,6 @@ public class TwoCircleLinkedList <E> extends AbstractList<E>{
 		// - 当前链表没有元素
 		if (size == 0) {
 			Node<E> node = new Node<>(null, element, null);
-			node.prev = node.next = node;
 			first = last = node;
 			size++;
 			return;
@@ -57,14 +57,12 @@ public class TwoCircleLinkedList <E> extends AbstractList<E>{
 
 		if (index == 0) {// - 插入在头部
 			Node<E> oldFirst = first;
-			first = new Node<>(last, element, oldFirst);
+			first = new Node<>(null, element, oldFirst);
 			oldFirst.prev = first;
-			last.next = first;
-		}else if (index == size - 1) { // - 插入在尾部
+		}else if (index == size) { // - 插入在尾部
 			Node<E> oldLast = last;
-			last = new Node<>(oldLast, element, first);
+			last = new Node<>(oldLast, element, null);
 			oldLast.next = last;
-			first.prev = last;
 		} else {// - 插入在中间
 			Node<E> next = node(index);
 			Node<E> prev = next.prev;
@@ -82,18 +80,23 @@ public class TwoCircleLinkedList <E> extends AbstractList<E>{
 		Node<E> prev = node.prev;
 		
 		if (index == 0) { // - 删除头部
-			prev.next = next;
-			next.prev = prev;
+			if (next != null) {
+				next.prev = null;
+			}
 			first = next;
-		}else if (index == size) { // - 删除尾部
-			prev.next = next;
-			next.prev = prev;
+		}else if (index == size - 1) { // - 删除尾部
+			if (prev != null) {
+				prev.next = null;
+			}
 			last = prev;
 		}else { // - 删除中间
-			prev.next = next;
-			next.prev = prev;
+			if (prev != null) {
+				prev.next = next;
+			}
+			if (next != null) {
+				next.prev = prev;
+			}
 		}
-
 		size--;
 	}
 
@@ -119,6 +122,7 @@ public class TwoCircleLinkedList <E> extends AbstractList<E>{
 		checkIndex(index);
 		// - 查找的坐标 < 长度的一半, 从前遍历, 否则从后遍历
 		// - 从前往后遍历
+
 		if (index < (size >> 1)) {
 			Node <E> node = first;
 			for (int i = 0; i < index; i++) {

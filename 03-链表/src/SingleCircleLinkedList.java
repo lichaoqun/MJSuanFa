@@ -55,7 +55,7 @@ public class SingleCircleLinkedList <E> extends AbstractList<E>{
 			Node <E> newFirst = new Node<>(element, first);
 			Node<E> last = node(size - 1);
 			last.next = first = newFirst;
-		}else if (index == size){// - 尾部插入
+		}else if (index == size - 1){// - 尾部插入
 			Node<E> oldLast = node(size - 1);
 			Node <E> newLast = new Node<>(element, first);
 			oldLast.next = newLast;
