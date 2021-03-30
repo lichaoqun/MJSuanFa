@@ -23,6 +23,38 @@ public class _面试题_02_02_返回倒数第k个节点 {
 		count++;
 		return (newNode != null) ? newNode : head;
     }
+	// - 双指针
+	 public int kthToLast1(ListNode head, int k) {
+	        ListNode dummyHead = new ListNode(-1);
+	        dummyHead.next = head;
+	        ListNode p = dummyHead;
+	        ListNode q = dummyHead;
+	        for (int i = 0; i < k; i++) {
+	            q = q.next;
+	        }
+	        while (q!=null) {
+	            q = q.next;
+	            p = p.next;
+	        }
+	        return p.val;
+	   }
+	 
+	 public int kthToLast2(ListNode head, int k) {
+	        ListNode p = head;
+	        ListNode q = head;
+	        for (int i = 0; q != null; i++) {
+	        	// - 以下两种写法都可以
+//	             q = q.next;
+//	             if(i < k)continue;
+//	             p = p.next;
+	        	
+	        	 q = q.next;
+	             if(i >= k) {;
+	             	p = p.next;
+	             }
+	        }
+	        return p.val;
+ }
 	/**
 	 * @param args
 	 */
@@ -44,7 +76,7 @@ public class _面试题_02_02_返回倒数第k个节点 {
     	l4.next = l5;
     	l5.next = l6;
     	l6.next = l7;
-    	System.out.println(s.kthToLast(l1, 1));
+    	System.out.println(s.kthToLast2(l1, 1));
 	}
 
 }

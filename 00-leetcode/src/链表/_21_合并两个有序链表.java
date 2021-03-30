@@ -13,13 +13,13 @@ public class _21_合并两个有序链表 {
 		ListNode head = new ListNode(0);
 		ListNode last = head;
 		while (l1.next != null && l2.next != null) {
-			if (l1.val > l2.val) {
-				last.next = l2;
-				l2 = l2.next;
-			}else {
-				last.next = l1;
-				l1 = l1.next;
-			}
+			if(l1.val > l2.val) {
+                last.next = l2;
+                l2 = l2.next;
+            }else{
+                last.next = l1;
+                l1 = l1.next;
+            }
 			last = last.next;
 		}
 		

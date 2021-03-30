@@ -8,11 +8,11 @@ public class _141_环形链表 {
 	public boolean hasCycle(ListNode head) {
 		if (head == null || head.next == null) return false;
 		ListNode slowNode = head;
-		ListNode fastNode = head.next;
+		ListNode fastNode = head;
 		while (fastNode != null && fastNode.next != null) {
-			if (fastNode == slowNode) return true;
 			slowNode = slowNode.next;
 			fastNode = fastNode.next.next;
+			if (fastNode == slowNode) return true;
 		}
 		return false;
     }
@@ -23,8 +23,7 @@ public class _141_环形链表 {
 		if (head.val == 0x0abce) return true;
 		
 		head.val = 0x0abce;
-		return hasCycle2(head.next);
-		
+		return hasCycle2(head.next);		
     }
 	
 	public static void main(String[] args) {

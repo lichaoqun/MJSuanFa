@@ -11,10 +11,10 @@ public class _876_链表的中间结点 {
 	
     public ListNode middleNode(ListNode head) {
     	ListNode slowListNode = head;
-    	ListNode fastListNode = head.next;
-    	while(fastListNode != null) {
+    	ListNode fastListNode = head;
+    	while(fastListNode != null && fastListNode.next != null) {
     		slowListNode = slowListNode.next;
-    		fastListNode = (fastListNode.next != null) ? fastListNode.next.next : fastListNode.next;
+    		fastListNode = fastListNode.next.next;
     	}
     	return slowListNode;
      }
@@ -39,8 +39,7 @@ public class _876_链表的中间结点 {
     	l3.next = l4;
     	l4.next = l5;
     	l5.next = l6;
-    	l6.next = l7;
-    	l7.next = null;
+//    	l6.next = l7;
     	System.out.println(l1);
     	System.out.println(s.middleNode(l1));
 	}

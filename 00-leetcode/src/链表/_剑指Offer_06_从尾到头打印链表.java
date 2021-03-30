@@ -37,7 +37,19 @@ public class _剑指Offer_06_从尾到头打印链表 {
 		}
     	nodeArray.add(head);
     	return nodeArray;
-
+    }
+    
+    public int[] reversePrint1(ListNode head) {
+    	ArrayList <Integer> valusArray = new ArrayList<>();
+    	while (head != null) {
+    		valusArray.add(0, head.val);
+			head = head.next;
+		}
+    	int[] result = new int[valusArray.size()];
+    	for (int i = 0; i < valusArray.size(); i++) {
+    		result[i] = valusArray.get(i);
+		}
+    	return result;
     }
 	/**
 	 * @param args
@@ -60,6 +72,8 @@ public class _剑指Offer_06_从尾到头打印链表 {
     	for (int i = 0; i < result.length; i++) {
     		System.out.println(result[i]);			
 		}
+    	
+    	s.reversePrint1(l1);
 
 	}
 
