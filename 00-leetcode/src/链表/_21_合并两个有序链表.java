@@ -65,7 +65,6 @@ public class _21_合并两个有序链表 {
     	l77.next = l88;
     	
     	System.out.println(s.mergeTwoLists(l1, l11));
-
 	}
 
 }
