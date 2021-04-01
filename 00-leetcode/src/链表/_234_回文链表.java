@@ -3,6 +3,9 @@
  */
 package 链表;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 /**
  * @author lichaoqun
  *	https://leetcode-cn.com/problems/palindrome-linked-list/
@@ -96,6 +99,24 @@ public class _234_回文链表 {
 		}
        	return true;
     }
+    
+    // - 使用栈
+    public boolean isPalindrome2(ListNode head) {
+    	ArrayList<Integer> arrayList = new ArrayList<>();
+    	Stack <Integer> stack = new Stack<>();
+    	
+    	while (head != null) {
+    		int val = head.val;
+    		if(!arrayList.contains(val)) {
+    			stack.push(val);
+    		}else {
+				if(val != stack.pop()) return false;
+			}
+    		arrayList.add(head.val);
+    		head = head.next;
+		}
+    	return true;
+    }
 
 	/**
 	 * @param args
@@ -118,6 +139,25 @@ public class _234_回文链表 {
 //    	l5.next = l6;
     	System.out.println(s.isPalindrome1(l1));
 //    	System.out.println(s.isPalindrome(l1));
+    	
+
+
+		ListNode s1 = new ListNode(1);
+    	ListNode s2 = new ListNode(2);
+    	ListNode s3 = new ListNode(3);
+    	ListNode s4 = new ListNode(4);
+    	ListNode s5 = new ListNode(3);
+    	ListNode s6 = new ListNode(2);
+    	ListNode s7 = new ListNode(1);
+    	s1.next = s2;
+    	s2.next = s3;
+    	s3.next = s4;
+    	s4.next = s5;
+    	s5.next = s6;
+    	s6.next = s7;
+    	
+    	System.out.println(s.isPalindrome2(s1));
+    	
 	}
 
 }
