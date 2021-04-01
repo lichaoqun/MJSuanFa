@@ -16,11 +16,9 @@ public class _1047_删除字符串中的所有相邻重复项 {
     		char ch = S.charAt(i);
     		if (!stacks.isEmpty() && stacks.peek() == ch) {
 				stacks.pop();
-				
 			}else {
 				stacks.push(ch);
 			}
-			
 		}
     	
     	StringBuilder sb = new StringBuilder();
