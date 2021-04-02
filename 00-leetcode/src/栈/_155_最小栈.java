@@ -4,6 +4,7 @@
 package 栈;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import java.util.List;
  */
 public class _155_最小栈 {
     /** initialize your data structure here. */
+	
+	// - 方案一
 	// - 大->小
 	private List<Integer> assisLinkList = new LinkedList<>();
 	private List<Integer> stack = new ArrayList<>();
@@ -22,7 +25,6 @@ public class _155_最小栈 {
     	// - 遍历找到第一个 val 小的, 并且保存
     	boolean addToArray = false;
     	for (int i = 0; i < assisLinkList.size(); i++) {
-
     		int va = assisLinkList.get(i);
     		if (va < val) {
     			assisLinkList.add(i, val);
@@ -49,6 +51,33 @@ public class _155_最小栈 {
     
     public int getMin() {
     	return assisLinkList.get(Math.max(assisLinkList.size() - 1, 0));
+    }
+
+	// - 方案二
+    Deque<Integer> xStack;
+    Deque<Integer> minStack;
+
+    public _155_最小栈() {
+        xStack = new LinkedList<Integer>();
+        minStack = new LinkedList<Integer>();
+        minStack.push(Integer.MAX_VALUE);
+    }
+    public void push2(int val) {
+    	xStack.push(val);
+    	minStack.push(Math.min(val, minStack.peek()));
+    }
+    
+    public void pop2() {
+    	xStack.pop();
+    	minStack.pop();
+    }
+    
+    public int top2() {
+        return xStack.peek();
+    }
+    
+    public int getMin2() {
+        return minStack.peek();
     }
 	/**
 	 * @param args
