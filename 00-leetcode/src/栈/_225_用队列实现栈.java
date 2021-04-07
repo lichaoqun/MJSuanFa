@@ -32,9 +32,7 @@ public class _225_用队列实现栈 {
     	while (!currentQueue.isEmpty()) {
 			queue.offer(currentQueue.poll());
 		}
-    	currentQueue = queue;
-    	
-    	
+    	currentQueue = queue;    	
     }
     
     /** Removes the element on top of the stack and returns that element. */
