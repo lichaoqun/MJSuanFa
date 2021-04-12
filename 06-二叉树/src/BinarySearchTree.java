@@ -1,4 +1,6 @@
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BinarySearchTree <E> {
 	
@@ -21,6 +23,14 @@ public class BinarySearchTree <E> {
 		public boolean hasTwoChildren() {
 			return  (this.left != null) && (this.right != null);
 		}
+	}
+	
+	public static abstract class Visitor<E> {
+		boolean stop;
+		/**
+		 * @return 如果返回true，就代表停止遍历
+		 */
+		public abstract boolean visit(E element);
 	}
 	
 	
@@ -72,28 +82,28 @@ public class BinarySearchTree <E> {
 		}
 		
 		// - 已经有根节点, 遍历每个节点的element和当前节点的element比较, 如果当前的值>当前节点的值, 则作为左子节点, 否则作为右子节点;
-		int cmp = 0;
-		Node<E> node  = root;
-		Node<E>parent = root;
-		while (node != null) {
-			cmp = compare(element, node.element);
-			parent = node; 
+		int lastCmpResult = 0;
+		Node<E> curNode  = root;
+		Node<E>lastParentNode = root;
+		while (curNode != null) {
+			lastCmpResult = compare(element, curNode.element);
+			lastParentNode = curNode; 
 			
-			if (cmp > 0) {
-				node = node.right;
-			} else if (cmp > 0){
-				node = node.left;
+			if (lastCmpResult > 0) {
+				curNode = curNode.right;
+			} else if (lastCmpResult > 0){
+				curNode = curNode.left;
 			}else{
-				node.element = element;
+				curNode.element = element;
 				return;
 			}			
 		}
 		
-		node = new Node <>(element, parent);
-		if (cmp > 0) {
-			parent.right = node;
+		curNode = new Node <>(element, lastParentNode);
+		if (lastCmpResult > 0) {
+			lastParentNode.right = curNode;
 		}else {
-			parent.left = node;
+			lastParentNode.left = curNode;
 		}
 		
 		// - 增加节点数量
@@ -103,10 +113,94 @@ public class BinarySearchTree <E> {
 //	public void remove(E element) {
 //		remove(node(element));
 //	}
-//
-//	public boolean contains(E element) {
-//		return node(element) != null;
-//	}
+
+	public boolean contains(E element) {
+		return node(element) != null;
+	}
+	
+	/* 遍历 */
+	// - 前序遍历
+	public void preorderTraversal1() {
+		preorderTraversal1(root);
+	}
+	public void preorderTraversal1(Node<E>node) {
+		if (node == null) return;
+		System.out.println(node.element);
+		preorderTraversal1(node.left);
+		preorderTraversal1(node.right);
+		System.out.println("left: " + node.left.element + ", right: " + node.right.element + ";");
+	}
+	public void preorderTraversal2(Visitor<E> visitor) {
+		if (visitor == null) return;
+		preorderTraversal2(root, visitor);
+	}
+	public void preorderTraversal2(Node<E>node, Visitor<E> visitor) {
+		if (node == null || visitor.stop) return;
+		visitor.stop = visitor.visit(node.element);
+		if (visitor.stop ) return;
+		preorderTraversal2(node.left, visitor);
+		preorderTraversal2(node.right, visitor);
+	}
+	
+	// - 中序遍历
+	public void inorderTraversal1() {
+		inorderTraversal1(root);
+	}
+	public void inorderTraversal1(Node<E>node) {
+		if (node == null) return;
+		inorderTraversal1(node.left);
+		System.out.println(node.element);
+		inorderTraversal1(node.right);
+	}
+	
+	public void inorderTraversal2(Visitor<E>visitor) {
+		if (visitor == null) return;
+		inorderTraversal2(root, visitor);
+	}
+	public void inorderTraversal2(Node<E>node, Visitor<E>visitor) {
+		if (node == null || visitor.stop) return;
+		inorderTraversal2(node.left, visitor);
+		boolean stop = visitor.visit(node.element);
+		if (stop) return;
+		inorderTraversal2(node.right, visitor);
+	}
+	
+	// - 后序遍历
+	public void postorderTraversal1() {
+		postorderTraversal1(root);
+	}
+	public void postorderTraversal1(Node<E>node) {
+		if (node == null) return;
+		postorderTraversal1(node.left);
+		postorderTraversal1(node.right);
+		System.out.println(node.element);
+	}
+	public void postorderTraversal2(Visitor<E>visitor) {
+		if (visitor == null) return;
+		postorderTraversal2(root, visitor);
+	}
+	public void postorderTraversal2(Node<E>node, Visitor<E>visitor) {
+		if (node == null || visitor.stop) return;
+		postorderTraversal2(node.left, visitor);
+		postorderTraversal2(node.right, visitor);
+		boolean stop = visitor.visit(node.element);
+		if (stop) return;
+	}
+	
+	// - 层序遍历
+	public void levelOrderTraversal2(Visitor<E>visitor) {
+		if (root == null || visitor == null) return;
+		
+		Queue<Node<E>>queue = new LinkedList<>();
+		queue.offer(root);
+		
+		while (queue.isEmpty()) {
+			Node<E>node = queue.poll();
+			if(visitor.visit(node.element)) return;
+			if (node.left != null) queue.offer(node.left); 
+			if (node.right != null) queue.offer(node.right);
+		}
+	}
 	
 	// - 根据元素找到节点
 	private Node<E> node(E element) {
@@ -114,9 +208,11 @@ public class BinarySearchTree <E> {
 		elementCheck(element);
 		
 		// - 查找
-		Node<E>node = root;
-		while(node != null) {
-			int cmp = compare(element, node.element);
+		Node<E>curNode = root;
+		while(curNode != null) {
+			int cmpResult = compare(element, curNode.element);
+			if (cmpResult == 0) return curNode;
+			curNode = (cmpResult > 0) ? curNode.right : curNode.left;   
 		}
 		return null;
 	}
