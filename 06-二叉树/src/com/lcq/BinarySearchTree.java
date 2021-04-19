@@ -1,8 +1,13 @@
+package com.lcq;
+
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
-public class BinarySearchTree <E> {
+import com.lcq.printer.BinaryTreeInfo;
+
+public class BinarySearchTree <E> implements BinaryTreeInfo{
 	
 	// - 节点类
 	private static class Node<E> {
@@ -91,7 +96,7 @@ public class BinarySearchTree <E> {
 			
 			if (lastCmpResult > 0) {
 				curNode = curNode.right;
-			} else if (lastCmpResult > 0){
+			} else if (lastCmpResult < 0){
 				curNode = curNode.left;
 			}else{
 				curNode.element = element;
@@ -128,7 +133,6 @@ public class BinarySearchTree <E> {
 		System.out.println(node.element);
 		preorderTraversal1(node.left);
 		preorderTraversal1(node.right);
-		System.out.println("left: " + node.left.element + ", right: " + node.right.element + ";");
 	}
 	public void preorderTraversal2(Visitor<E> visitor) {
 		if (visitor == null) return;
@@ -140,6 +144,31 @@ public class BinarySearchTree <E> {
 		if (visitor.stop ) return;
 		preorderTraversal2(node.left, visitor);
 		preorderTraversal2(node.right, visitor);
+	}
+	public void preorderTraversal3(Visitor<E> visitor) {
+		Stack<Node<E>> stack = new Stack<>();
+		stack.push(root);
+		while (!stack.isEmpty()) {
+			Node<E> node = stack.pop();
+			visitor.stop = visitor.visit(node.element);
+			if (visitor.stop ) return;
+			if (node.right != null) stack.push(node.right);
+			if (node.left != null) stack.push(node.left);
+		}
+	}
+	public void preorderTraversal4() {
+		Stack<Node<E>> stack = new Stack<>();
+		Node<E>node = root;
+		while (true) {
+			if (node != null) {
+				System.out.println(node.element);
+				stack.push(node.right);
+				node = node.left;
+			} else {
+				if (stack.isEmpty()) return;
+				node = stack.pop();
+			}
+		}
 	}
 	
 	// - 中序遍历
@@ -164,6 +193,21 @@ public class BinarySearchTree <E> {
 		if (stop) return;
 		inorderTraversal2(node.right, visitor);
 	}
+	public void inorderTraversal3() {
+		Stack<Node<E>> stack = new Stack<>();
+		Node<E>node = root;
+		while (true) {
+			if (node != null) {
+				stack.push(node);
+				node = node.left;
+			}else {
+				if (stack.isEmpty()) return;
+				node = stack.pop();
+				System.out.println(node.element);
+				node = node.right;
+			}
+		}
+	}
 	
 	// - 后序遍历
 	public void postorderTraversal1() {
@@ -186,19 +230,62 @@ public class BinarySearchTree <E> {
 		boolean stop = visitor.visit(node.element);
 		if (stop) return;
 	}
+	public void postorderTraversal3() {
+		Stack<Node<E>> stack = new Stack<>();
+		Node<E>node = root;
+		stack.push(node);
+		Node<E>lastNode = null;
+		do {
+			node = stack.peek();
+			if (node.isLeaf() || lastNode == node.left || lastNode == node.right) {
+				node = stack.pop();
+				System.out.println(node.element);
+			}else {
+				stack.push(node.right);
+				stack.push(node.left);
+			}
+			lastNode = node;
+			
+		} while (!stack.isEmpty());
+	}
 	
 	// - 层序遍历
+	public void levelOrderTraversal1() {
+		if (root == null) return;
+		
+		Queue<Node<E>>queue = new LinkedList<>();
+		queue.offer(root);
+		
+		while (!queue.isEmpty()) {
+			Node<E>node = queue.poll();
+			System.out.println(node.element);
+			if (node.left != null) { 
+				queue.offer(node.left);
+				System.out.println("left : " + node.left);
+			}
+			if (node.right != null) {
+				queue.offer(node.right);
+				System.out.println("right : " + node.right);
+			}
+		}
+	}
 	public void levelOrderTraversal2(Visitor<E>visitor) {
 		if (root == null || visitor == null) return;
 		
 		Queue<Node<E>>queue = new LinkedList<>();
 		queue.offer(root);
 		
-		while (queue.isEmpty()) {
+		while (!queue.isEmpty()) {
 			Node<E>node = queue.poll();
 			if(visitor.visit(node.element)) return;
-			if (node.left != null) queue.offer(node.left); 
-			if (node.right != null) queue.offer(node.right);
+			if (node.left != null) { 
+				queue.offer(node.left);
+				System.out.println("left : " + node.left.element);
+			}
+			if (node.right != null) {
+				queue.offer(node.right);
+				System.out.println("right : " + node.right.element);
+			}
 		}
 	}
 	
@@ -231,6 +318,28 @@ public class BinarySearchTree <E> {
 		}
 		return ((Comparable<E>)e1).compareTo(e2);
 	}
-	
-	
+	@Override
+	public Object root() {
+		return root;
+	}
+
+	@Override
+	public Object left(Object node) {
+		return ((Node<E>)node).left;
+	}
+
+	@Override
+	public Object right(Object node) {
+		return ((Node<E>)node).right;
+	}
+
+	@Override
+	public Object string(Object node) {
+		Node<E> myNode = (Node<E>)node;
+		String parentString = "null";
+		if (myNode.parent != null) {
+			parentString = myNode.parent.element.toString();
+		}
+		return myNode.element;
+	}
 }
