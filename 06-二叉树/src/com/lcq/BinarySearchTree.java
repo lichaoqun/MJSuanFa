@@ -145,18 +145,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		preorderTraversal2(node.left, visitor);
 		preorderTraversal2(node.right, visitor);
 	}
-	public void preorderTraversal3(Visitor<E> visitor) {
-		Stack<Node<E>> stack = new Stack<>();
-		stack.push(root);
-		while (!stack.isEmpty()) {
-			Node<E> node = stack.pop();
-			visitor.stop = visitor.visit(node.element);
-			if (visitor.stop ) return;
-			if (node.right != null) stack.push(node.right);
-			if (node.left != null) stack.push(node.left);
-		}
-	}
-	public void preorderTraversal4() {
+	public void preorderTraversal3() {
 		Stack<Node<E>> stack = new Stack<>();
 		Node<E>node = root;
 		while (true) {
@@ -168,6 +157,17 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 				if (stack.isEmpty()) return;
 				node = stack.pop();
 			}
+		}
+	}
+	public void preorderTraversal4(Visitor<E> visitor) {
+		Stack<Node<E>> stack = new Stack<>();
+		stack.push(root);
+		while (!stack.isEmpty()) {
+			Node<E> node = stack.pop();
+			visitor.stop = visitor.visit(node.element);
+			if (visitor.stop ) return;
+			if (node.right != null) stack.push(node.right);
+			if (node.left != null) stack.push(node.left);
 		}
 	}
 	
@@ -235,7 +235,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		Node<E>node = root;
 		stack.push(node);
 		Node<E>lastNode = null;
-		do {
+		while (!stack.isEmpty()) {
 			node = stack.peek();
 			if (node.isLeaf() || lastNode == node.left || lastNode == node.right) {
 				node = stack.pop();
@@ -246,7 +246,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			}
 			lastNode = node;
 			
-		} while (!stack.isEmpty());
+		};
 	}
 	
 	// - 层序遍历
