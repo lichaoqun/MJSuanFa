@@ -28,6 +28,13 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		public boolean hasTwoChildren() {
 			return  (this.left != null) && (this.right != null);
 		}
+		
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			StringBuilder sb = new StringBuilder();
+			return sb.append("(" + this.element + ")").toString();
+		}
 	}
 	
 	public static abstract class Visitor<E> {
@@ -94,14 +101,11 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			lastCmpResult = compare(element, curNode.element);
 			lastParentNode = curNode; 
 			
-			if (lastCmpResult > 0) {
-				curNode = curNode.right;
-			} else if (lastCmpResult < 0){
-				curNode = curNode.left;
-			}else{
+			if (lastCmpResult == 0) {
 				curNode.element = element;
 				return;
-			}			
+			}
+			curNode = (lastCmpResult > 0) ? curNode.right : curNode.left;	
 		}
 		
 		curNode = new Node <>(element, lastParentNode);
@@ -129,8 +133,9 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		preorderTraversal1(root);
 	}
 	public void preorderTraversal1(Node<E>node) {
+
 		if (node == null) return;
-		System.out.println(node.element);
+		System.out.println(node);
 		preorderTraversal1(node.left);
 		preorderTraversal1(node.right);
 	}
@@ -150,7 +155,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		Node<E>node = root;
 		while (true) {
 			if (node != null) {
-				System.out.println(node.element);
+				System.out.println(node);
 				stack.push(node.right);
 				node = node.left;
 			} else {
@@ -178,7 +183,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 	public void inorderTraversal1(Node<E>node) {
 		if (node == null) return;
 		inorderTraversal1(node.left);
-		System.out.println(node.element);
+		System.out.println(node);
 		inorderTraversal1(node.right);
 	}
 	
@@ -217,7 +222,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		if (node == null) return;
 		postorderTraversal1(node.left);
 		postorderTraversal1(node.right);
-		System.out.println(node.element);
+		System.out.println(node);
 	}
 	public void postorderTraversal2(Visitor<E>visitor) {
 		if (visitor == null) return;
