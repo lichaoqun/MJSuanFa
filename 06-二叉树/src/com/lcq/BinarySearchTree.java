@@ -245,7 +245,6 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 				stack.push(node.left);
 			}
 			lastNode = node;
-			
 		};
 	}
 	
@@ -261,11 +260,9 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			System.out.println(node.element);
 			if (node.left != null) { 
 				queue.offer(node.left);
-				System.out.println("left : " + node.left);
 			}
 			if (node.right != null) {
 				queue.offer(node.right);
-				System.out.println("right : " + node.right);
 			}
 		}
 	}
@@ -280,11 +277,9 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			if(visitor.visit(node.element)) return;
 			if (node.left != null) { 
 				queue.offer(node.left);
-				System.out.println("left : " + node.left.element);
 			}
 			if (node.right != null) {
 				queue.offer(node.right);
-				System.out.println("right : " + node.right.element);
 			}
 		}
 	}
