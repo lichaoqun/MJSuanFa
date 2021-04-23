@@ -289,6 +289,13 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		}
 	}
 	
+	// - 判断是不是完全二叉树 (层序遍历到)
+	public boolean isComplete() {
+		if(null == root) return false;
+		
+		return true;
+	}
+	
 	// - 根据元素找到节点
 	private Node<E> node(E element) {
 		// - 检查元素
