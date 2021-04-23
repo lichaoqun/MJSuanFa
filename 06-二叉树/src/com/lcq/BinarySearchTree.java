@@ -243,7 +243,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		while (!stack.isEmpty()) {
 			node = stack.peek();
 			if (node.isLeaf() || lastNode == node.left || lastNode == node.right) {
-				node = stack.pop();
+				stack.pop();
 				System.out.println(node.element);
 			}else {
 				stack.push(node.right);
