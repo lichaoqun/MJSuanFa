@@ -1,5 +1,6 @@
 package com.lcq;
 
+import java.awt.TexturePaint;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -290,9 +291,42 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 	}
 	
 	// - 判断是不是完全二叉树 (层序遍历到)
+	/**
+	 * 按层序遍历二叉树, 从每层的左边向右边依次遍历所有的节点.
+	 * 如果当前节点有右孩子, 但是没有左孩子, 直接返回false.
+	 * 如果当前节点并不是左右孩子全有, 那之后的节点必须都为叶节点, 否则返回false.
+	 * 遍历过程中如果不返回false, 遍历结束后返回true.
+	 * */
 	public boolean isComplete() {
 		if(null == root) return false;
 		
+		Queue<Node<E>> queue = new LinkedList<>();
+		
+		// - 只存在右子树的子节点
+		boolean hasleaf = false;
+		queue.offer(root);
+		
+		while (!queue.isEmpty()) {
+			Node<E>node = queue.poll();
+
+			// - 完全二叉树, 如果之前已经存在只有右子树的子节点, 那个节点后边的每一个叶子节点都必须是叶子节点. 
+			if (hasleaf && !node.isLeaf()) return false;
+
+			if (node.left != null) {
+				queue.offer(node.left);
+			}else if (node.right != null) {
+				// - 节点没有左子树,只有右子树, 这个数就不是完全二叉树.
+				return false;
+			}
+			
+			// - 走到这, 说明(左子树存在右子树有可能存在, 有可能不存在. 或者左子树不存在并且右子树不存在)
+			if (node.right != null) {
+				queue.offer(node.right);
+			}else {
+				// - 左子树存在, 右子树不存在, 或者左右子树都不存在(左右子树不同时存在)
+				hasleaf = true;
+			}
+		}
 		return true;
 	}
 	
