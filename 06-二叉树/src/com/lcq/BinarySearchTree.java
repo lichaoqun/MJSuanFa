@@ -1,6 +1,5 @@
 package com.lcq;
 
-import java.awt.TexturePaint;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -330,6 +329,46 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		return true;
 	}
 	
+	/**
+	 * 层序遍历二叉树,  保存每层的节点的个数,  每遍历完一次,  树的高度 + 1;
+	 * */
+	// - 二叉树的高度
+	public int height() {
+		if (root == null) return 0;
+		int height = 0;
+		int levelSize = 1;
+		
+		Queue<Node<E>>queue = new LinkedList<>();
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			Node<E>node = queue.poll();
+			levelSize --;
+			
+			if(node.left != null) {
+				queue.offer(node.left);
+			}
+			if (node.right != null) {
+				queue.offer(node.right);
+			}
+			
+			if (levelSize == 0) {
+				levelSize = queue.size();
+				height++;
+			}
+		}
+		
+		return height;
+	}
+	
+	public int height2() {
+		return height(root);
+	}
+	
+	public int height(Node<E>node) {
+		if (node == null) return 0;
+		return 1 + Math.max(height(node.left), height(node.right));
+	}
+	
 	// - 根据元素找到节点
 	private Node<E> node(E element) {
 		// - 检查元素
@@ -343,6 +382,43 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			curNode = (cmpResult > 0) ? curNode.right : curNode.left;   
 		}
 		return null;
+	}
+	
+	// - 前驱结点
+	private Node<E> predecessor(Node<E>node) {
+		
+		// - 前驱结点在左子树中(node.left.right.right.right.right.right....right);
+		Node<E>p = node.left;
+		if (p != null) {
+			while (p.right != null) {
+				p = p.right;
+			}
+			return p;
+		}
+		
+		// 从父节点、祖父节点中寻找前驱节点
+		while (node.parent != null && node.parent.left == node) {
+			node = node.parent;
+		}
+		return node.parent;
+	}
+	
+	// - 后继节点
+	private Node<E> successor(Node<E>node) {
+		// - 后集结点在右子树中(node.right.left.left.left.left.left....left);
+		Node<E>p = node.right;
+		if (p != null) {
+			while (p.left != null) {
+				p = p.left;
+			}
+			return p;
+		}
+		
+		// 从父节点、祖父节点中寻找前驱节点
+		while (node.parent != null && node.parent.right == node) {
+			node = node.parent;
+		}
+		return node.parent;
 	}
 	
 	// - 节点的元素检查
