@@ -119,9 +119,9 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		size++;
 	}
 	
-//	public void remove(E element) {
-//		remove(node(element));
-//	}
+	public void remove(E element) {
+		remove(node(element));
+	}
 
 	public boolean contains(E element) {
 		return node(element) != null;
@@ -243,13 +243,13 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		while (!stack.isEmpty()) {
 			node = stack.peek();
 			if (node.isLeaf() || lastNode == node.left || lastNode == node.right) {
-				stack.pop();
 				System.out.println(node.element);
+				stack.pop();
+				lastNode = node;
 			}else {
 				stack.push(node.right);
 				stack.push(node.left);
 			}
-			lastNode = node;
 		};
 	}
 	
@@ -419,6 +419,45 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			node = node.parent;
 		}
 		return node.parent;
+	}
+	
+	private void remove(Node<E> node) {
+		if (node == null) return;
+		
+		size--;
+		
+		if (node.hasTwoChildren()) { // 度为2的节点
+			// 找到后继节点
+			Node<E> s = successor(node);
+			// 用后继节点的值覆盖度为2的节点的值
+			node.element = s.element;
+			// 删除后继节点
+			node = s;
+		}
+		
+		// 删除node节点（node的度必然是1或者0）
+		Node<E> replacement = node.left != null ? node.left : node.right;
+		
+		if (replacement != null) { // node是度为1的节点
+			// 更改parent
+			replacement.parent = node.parent;
+			// 更改parent的left、right的指向
+			if (node.parent == null) { // node是度为1的节点并且是根节点
+				root = replacement;
+			} else if (node == node.parent.left) {
+				node.parent.left = replacement;
+			} else { // node == node.parent.right
+				node.parent.right = replacement;
+			}
+		} else if (node.parent == null) { // node是叶子节点并且是根节点
+			root = null;
+		} else { // node是叶子节点，但不是根节点
+			if (node == node.parent.left) {
+				node.parent.left = null;
+			} else { // node == node.parent.right
+				node.parent.right = null;
+			}
+		}
 	}
 	
 	// - 节点的元素检查
