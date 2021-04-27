@@ -244,7 +244,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		while (!stack.isEmpty()) {
 			node = stack.peek();
 			if (node.isLeaf() || lastNode == node.left || lastNode == node.right) {
-				System.out.println(node.element);
+				System.out.println(node);
 				stack.pop();
 				lastNode = node;
 			}else {
@@ -254,6 +254,35 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		};
 	}
 	
+	public void postorderTraversal4() {
+		Stack<Node<E>> stack = new Stack<>();
+		Node<E>curNode = root;
+		Node<E>curRoot = root;
+		System.out.println("=========");
+		while (true) {
+			if (curNode != null) {
+				stack.push(curNode);
+				if (curNode.right != null) {
+					stack.push(curNode.right);
+				}
+				curNode = curNode.left;
+			}else {
+				if (stack.isEmpty()) return;
+				while (!stack.isEmpty()) {
+					Node<E> tempNode = stack.pop();
+					if (tempNode != curRoot.right) {
+						System.out.println(tempNode);
+					}else {
+						curRoot = tempNode;
+						curNode = tempNode;
+						break;
+					}
+
+				} 
+
+			}
+		}
+	}
 	// - 层序遍历
 	public void levelOrderTraversal1() {
 		if (root == null) return;

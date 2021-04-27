@@ -27,7 +27,7 @@ public class Main {
 		}
 		BinaryTrees.println(bst);
 
-		bst.inorderTraversal3();
+		bst.postorderTraversal3();
 	}
 
 }
