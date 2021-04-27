@@ -152,15 +152,16 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 	}
 	public void preorderTraversal3() {
 		Stack<Node<E>> stack = new Stack<>();
-		Node<E>node = root;
+		Node<E>curNode = root;
 		while (true) {
-			if (node != null) {
-				System.out.println(node);
-				stack.push(node.right);
-				node = node.left;
+			if (curNode != null) {
+				System.out.println(curNode);
+				stack.push(curNode);
+				curNode = curNode.left;
 			} else {
 				if (stack.isEmpty()) return;
-				node = stack.pop();
+				Node<E>node = stack.pop();
+				curNode = node.right;
 			}
 		}
 	}
@@ -200,16 +201,16 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 	}
 	public void inorderTraversal3() {
 		Stack<Node<E>> stack = new Stack<>();
-		Node<E>node = root;
+		Node<E>curNode = root;
 		while (true) {
-			if (node != null) {
-				stack.push(node);
-				node = node.left;
+			if (curNode != null) {
+				stack.push(curNode);
+				curNode = curNode.left;
 			}else {
 				if (stack.isEmpty()) return;
-				node = stack.pop();
-				System.out.println(node.element);
-				node = node.right;
+				Node<E>node = stack.pop();
+				System.out.println(node);
+				curNode = node.right;
 			}
 		}
 	}

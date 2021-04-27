@@ -17,11 +17,8 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-//		Integer data[] = new Integer[] {
-//				7, 4, 9, 2, 5, 8, 11, 1, 3, 10, 12
-//		};
 		Integer data[] = new Integer[] {
-				2, 1, 3
+				7, 4, 9, 2, 5, 8, 11, 1, 3, 10, 12
 		};
 		
 		BinarySearchTree<Integer> bst = new BinarySearchTree<>();
@@ -30,7 +27,7 @@ public class Main {
 		}
 		BinaryTrees.println(bst);
 
-		bst.preorderTraversal1();
+		bst.inorderTraversal3();
 	}
 
 }
