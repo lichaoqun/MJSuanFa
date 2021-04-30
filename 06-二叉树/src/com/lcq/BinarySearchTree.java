@@ -24,6 +24,9 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		public boolean isLeaf() {
 			return  (this.left == null) && (this.right == null);
 		}
+		public boolean isChildForNode(Node<E> parentNode) {
+			return  (this.parent == parentNode);
+		}
 		
 		public boolean hasTwoChildren() {
 			return  (this.left != null) && (this.right != null);
@@ -257,29 +260,18 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 	public void postorderTraversal4() {
 		Stack<Node<E>> stack = new Stack<>();
 		Node<E>curNode = root;
-		Node<E>curRoot = root;
-		System.out.println("=========");
-		while (true) {
-			if (curNode != null) {
-				stack.push(curNode);
-				if (curNode.right != null) {
-					stack.push(curNode.right);
-				}
-				curNode = curNode.left;
+		Node<E>lastNode = root;
+		stack.push(curNode);
+		while (!stack.isEmpty()) {
+			curNode = stack.peek();
+			if (curNode.isLeaf() ||  (lastNode.isChildForNode(curNode))) {
+				System.out.println(curNode);
+				stack.pop();
+				lastNode = curNode;
 			}else {
-				if (stack.isEmpty()) return;
-				while (!stack.isEmpty()) {
-					Node<E> tempNode = stack.pop();
-					if (tempNode != curRoot.right) {
-						System.out.println(tempNode);
-					}else {
-						curRoot = tempNode;
-						curNode = tempNode;
-						break;
-					}
-
-				} 
-
+				if (curNode.right != null) stack.push(curNode.right);
+				if (curNode.left != null) stack.push(curNode.left);
+				
 			}
 		}
 	}
