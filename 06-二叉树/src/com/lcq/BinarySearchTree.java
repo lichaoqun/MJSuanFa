@@ -285,7 +285,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		while (!queue.isEmpty()) {
 			Node<E>node = queue.poll();
 			System.out.println(node.element);
-			if (node.left != null) { 
+			if (node.left != null) {
 				queue.offer(node.left);
 			}
 			if (node.right != null) {
@@ -358,10 +358,12 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 	public int height() {
 		if (root == null) return 0;
 		int height = 0;
-		int levelSize = 1;
+		int levelSize = 0;
 		
 		Queue<Node<E>>queue = new LinkedList<>();
 		queue.offer(root);
+		levelSize = queue.size();
+		
 		while (!queue.isEmpty()) {
 			Node<E>node = queue.poll();
 			levelSize --;
