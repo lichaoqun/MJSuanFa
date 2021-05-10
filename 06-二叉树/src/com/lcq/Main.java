@@ -27,8 +27,15 @@ public class Main {
 		}
 		BinaryTrees.println(bst);
 		bst.reverseTree();
+		sep();
 		BinaryTrees.println(bst);
+		sep();
 		bst.postorderTraversal4();
+		sep();
+	}
+	
+	public static void sep() {
+		System.out.println("---------------------------------------------");
 	}
 
 }
