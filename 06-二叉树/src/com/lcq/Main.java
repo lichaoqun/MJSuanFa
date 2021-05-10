@@ -26,7 +26,8 @@ public class Main {
 			bst.add(data[i]);
 		}
 		BinaryTrees.println(bst);
-
+		bst.reverseTree();
+		BinaryTrees.println(bst);
 		bst.postorderTraversal4();
 	}
 

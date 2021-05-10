@@ -275,6 +275,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			}
 		}
 	}
+	
 	// - 层序遍历
 	public void levelOrderTraversal1() {
 		if (root == null) return;
@@ -350,6 +351,24 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		}
 		return true;
 	}
+
+	// - 反转二叉树
+	public void reverseTree() {
+		Queue<Node<E>>queue = new LinkedList<>();
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			Node<E>curNode = queue.poll();
+			if (curNode.left != null) {
+				queue.offer(curNode.left);
+			}
+			if (curNode.right != null) {
+				queue.offer(curNode.right);
+			}
+			Node<E>tempNode = curNode.left;
+			curNode.left = curNode.right;
+			curNode.right = tempNode;
+		}
+	}
 	
 	/**
 	 * 层序遍历二叉树,  保存每层的节点的个数,  每遍历完一次,  树的高度 + 1;
@@ -375,7 +394,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 				queue.offer(node.right);
 			}
 			
-			if (levelSize == 0) {
+			if (levelSize == 0) { // - 当前层遍历结束
 				levelSize = queue.size();
 				height++;
 			}
