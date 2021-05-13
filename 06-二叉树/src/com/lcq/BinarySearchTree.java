@@ -243,7 +243,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		Stack<Node<E>> stack = new Stack<>();
 		Node<E>node = root;
 		stack.push(node);
-		Node<E>lastNode = null;
+		Node<E>lastNode = root;
 		while (!stack.isEmpty()) {
 			node = stack.peek();
 			if (node.isLeaf() || lastNode == node.left || lastNode == node.right) {

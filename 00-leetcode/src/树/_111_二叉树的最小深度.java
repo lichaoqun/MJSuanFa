@@ -11,7 +11,8 @@ import java.util.Queue;
  * https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/
  */
 public class _111_二叉树的最小深度 {
-	
+
+	// - 当遍历到第一个叶子节点时候, 就是最小的高度;
 	public int minDepth(TreeNode root) {
         if(root == null) return 0;
         if(root.left == null && root.right == null) return 1;
@@ -29,11 +30,13 @@ public class _111_二叉树的最小深度 {
 				queue.offer(node.right);
 			}
 			
+			// - 遍历到第一个叶子节点, 高度增加, 直接返回最小高度
 			if (node.left == null && node.right == null) {
                 hei++;
-				break;
+				return hei;
 			}
 
+			// - 遍历完当前的层
 			if (size == 0) {
 				hei++;
 				size = queue.size();
