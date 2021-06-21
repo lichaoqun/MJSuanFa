@@ -1,7 +1,8 @@
 
 public interface List <E>{
 	
-	static final int ELEMENT_NOT_FOUND = -1;	
+	static final int ELEMENT_NOT_FOUND = -1;
+
 	// - 数组长度
 	public int size();
 	

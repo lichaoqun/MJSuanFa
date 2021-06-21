@@ -24,7 +24,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		public boolean isLeaf() {
 			return  (this.left == null) && (this.right == null);
 		}
-		public boolean isChildForNode(Node<E> parentNode) {
+		public boolean isChildOfNode(Node<E> parentNode) {
 			return  (this.parent == parentNode);
 		}
 		
@@ -264,7 +264,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		stack.push(curNode);
 		while (!stack.isEmpty()) {
 			curNode = stack.peek();
-			if (curNode.isLeaf() ||  (lastNode.isChildForNode(curNode))) {
+			if (curNode.isLeaf() ||  (lastNode.isChildOfNode(curNode))) {
 				System.out.println(curNode);
 				stack.pop();
 				lastNode = curNode;
