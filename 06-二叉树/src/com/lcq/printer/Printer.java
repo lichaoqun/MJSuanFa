@@ -4,7 +4,7 @@ public abstract class Printer {
 	/**
 	 * 二叉树的基本信息
 	 */
-	protected BinaryTreeInfo tree;
+	public BinaryTreeInfo tree;
 	
 	public Printer(BinaryTreeInfo tree) {
 		this.tree = tree;
