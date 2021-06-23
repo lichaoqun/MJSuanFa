@@ -24,7 +24,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		public boolean isLeaf() {
 			return  (this.left == null) && (this.right == null);
 		}
-		public boolean isChildOfNode(Node<E> parentNode) {
+		public boolean isChildrenOfNode(Node<E> parentNode) {
 			return  (this.parent == parentNode);
 		}
 		
@@ -96,7 +96,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			return;
 		}
 		
-		// - 已经有根节点, 遍历每个节点的element和当前节点的element比较, 如果当前的值>当前节点的值, 则作为左子节点, 否则作为右子节点;
+		// - 已经有根节点, 遍历每个节点的element和当前节点的element比较, 如果当前的值>当前节点的值, 则作为左子节点, 否则作为右子节点; 新增的节点一定是叶子节点.
 		int lastCmpResult = 0;
 		Node<E> curNode  = root;
 		Node<E>lastParentNode = root;
@@ -110,7 +110,8 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			}
 			curNode = (lastCmpResult > 0) ? curNode.right : curNode.left;	
 		}
-		
+
+		// - 已经遍历到叶子节点
 		curNode = new Node <>(element, lastParentNode);
 		if (lastCmpResult > 0) {
 			lastParentNode.right = curNode;
@@ -243,6 +244,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		Stack<Node<E>> stack = new Stack<>();
 		Node<E>node = root;
 		stack.push(node);
+		// - 这里的lastNode 初始值不能是null, 否则 lastNode == node.left || lastNode == node.right 的判断就会出现问题.
 		Node<E>lastNode = root;
 		while (!stack.isEmpty()) {
 			node = stack.peek();
@@ -259,12 +261,11 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 	
 	public void postorderTraversal4() {
 		Stack<Node<E>> stack = new Stack<>();
-		Node<E>curNode = root;
 		Node<E>lastNode = root;
-		stack.push(curNode);
+		stack.push(root);
 		while (!stack.isEmpty()) {
-			curNode = stack.peek();
-			if (curNode.isLeaf() ||  (lastNode.isChildOfNode(curNode))) {
+			Node<E> curNode = stack.peek();
+			if (curNode.isLeaf() ||  (lastNode.isChildrenOfNode(curNode))) {
 				System.out.println(curNode);
 				stack.pop();
 				lastNode = curNode;
