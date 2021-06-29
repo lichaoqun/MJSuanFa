@@ -325,14 +325,14 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		
 		Queue<Node<E>> queue = new LinkedList<>();
 		
-		// - 只存在右子树的子节点
+		// - 度<2的节点(如果只有一个节点, 那么这个节点必须是左子节点), 如果已经出现了这个节点, 那么这个节点后边的节点必须都是叶子节点
 		boolean hasleaf = false;
 		queue.offer(root);
 		
 		while (!queue.isEmpty()) {
 			Node<E>node = queue.poll();
 
-			// - 完全二叉树, 如果之前已经存在只有右子树的子节点, 那个节点后边的每一个叶子节点都必须是叶子节点. 
+			// - 完全二叉树, 如果之前已经存在度<2的子节点, 那个节点后边的每一个节点都必须是叶子节点.
 			if (hasleaf && !node.isLeaf()) return false;
 
 			if (node.left != null) {
@@ -346,7 +346,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			if (node.right != null) {
 				queue.offer(node.right);
 			}else {
-				// - 左子树存在, 右子树不存在, 或者左右子树都不存在(左右子树不同时存在)
+				// - 左子树存在, 右子树不存在, 或者左右子树都不存在(左右子树不同时存在), 出现这个情况后边的节点必须都是叶子节点.
 				hasleaf = true;
 			}
 		}
@@ -365,6 +365,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			if (curNode.right != null) {
 				queue.offer(curNode.right);
 			}
+			// - 到这里说明curNode的左右子节点都遍历过了.
 			Node<E>tempNode = curNode.left;
 			curNode.left = curNode.right;
 			curNode.right = tempNode;
@@ -378,11 +379,9 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 	public int height() {
 		if (root == null) return 0;
 		int height = 0;
-		int levelSize = 0;
-		
 		Queue<Node<E>>queue = new LinkedList<>();
 		queue.offer(root);
-		levelSize = queue.size();
+		int  levelSize = queue.size();
 		
 		while (!queue.isEmpty()) {
 			Node<E>node = queue.poll();
@@ -428,10 +427,9 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		return null;
 	}
 	
-	// - 前驱结点
+	// - 前驱结点 中序遍历时当前节点的前一个节点
 	private Node<E> predecessor(Node<E>node) {
-		
-		// - 前驱结点在左子树中(node.left.right.right.right.right.right....right);
+		// - 当前节点存在左子节点. 前驱结点在左子树中(node.left.right.right.right.right.right....right);
 		Node<E>p = node.left;
 		if (p != null) {
 			while (p.right != null) {
@@ -439,17 +437,17 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			}
 			return p;
 		}
-		
-		// 从父节点、祖父节点中寻找前驱节点
+
+		// - 当前节点存在左子节点.从父节点、祖父节点中寻找前驱节点
 		while (node.parent != null && node.parent.left == node) {
 			node = node.parent;
 		}
 		return node.parent;
 	}
 	
-	// - 后继节点
+	// - 后继节点 中序遍历时当前节点的后一个节点
 	private Node<E> successor(Node<E>node) {
-		// - 后集结点在右子树中(node.right.left.left.left.left.left....left);
+		// - 当前节点存在右子节点. 后继节点在右子树中(node.right.left.left.left.left.left....left);
 		Node<E>p = node.right;
 		if (p != null) {
 			while (p.left != null) {
@@ -457,25 +455,33 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 			}
 			return p;
 		}
-		
-		// 从父节点、祖父节点中寻找前驱节点
-		while (node.parent != null && node.parent.right == node) {
+
+		// - 当前节点不存在右子节点.从父节点、祖父节点中寻找后继节点
+		while (node.parent != null && node == node.parent.right) {
 			node = node.parent;
 		}
 		return node.parent;
 	}
-	
+
+	/**
+	 * 设 待删除节点为 node;
+	 * 1. 如果节点的度为2, 找到node的前驱/后继节点(tempNode), 然后将node.element替换为tempNode.element, 然后将tempNode标记为待删除的节点(node = tempNode).(如果一个节点的度为2, 那么这个节点的前驱/后继节点的度一定为1/0)
+	 * 2. 如果节点的度为1, 用子节点(subNode)替换node的位置(subNode.parent = node.parent), 父节点(parentNode)的子节点设置为subNode(node.parent.left = subNode / node.parent.right = subNode;)
+	 * 3. 如果节点的度为0, 判断当前的节点是父节点的左/右子节点, 直接将父节点的左/右节 置位 null;
+	 */
 	private void remove(Node<E> node) {
 		if (node == null) return;
 		
 		size--;
 		
 		if (node.hasTwoChildren()) { // 度为2的节点
-			// 找到后继节点
+			// - 找到后继节点
 			Node<E> s = successor(node);
-			// 用后继节点的值覆盖度为2的节点的值
+
+			// - 用后继节点的值覆盖度为2的节点的值
 			node.element = s.element;
-			// 删除后继节点
+
+			// - 将需要删除的节点换成后继节点.
 			node = s;
 		}
 		
@@ -483,19 +489,21 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		Node<E> replacement = node.left != null ? node.left : node.right;
 		
 		if (replacement != null) { // node是度为1的节点
-			// 更改parent
+			// - 更换子节点的父节点
 			replacement.parent = node.parent;
-			// 更改parent的left、right的指向
-			if (node.parent == null) { // node是度为1的节点并且是根节点
+			// - 更换父节点的子节点.
+			if (node.parent == null) { // - node是度为1的节点并且是根节点
 				root = replacement;
 			} else if (node == node.parent.left) {
+				// - 待删除的节点是左子节点
 				node.parent.left = replacement;
 			} else { // node == node.parent.right
+				// - 待删除的节点是左子节点
 				node.parent.right = replacement;
 			}
 		} else if (node.parent == null) { // node是叶子节点并且是根节点
 			root = null;
-		} else { // node是叶子节点，但不是根节点
+		} else { // - node是叶子节点，但不是根节点
 			if (node == node.parent.left) {
 				node.parent.left = null;
 			} else { // node == node.parent.right

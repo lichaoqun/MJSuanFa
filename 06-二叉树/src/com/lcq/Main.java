@@ -25,12 +25,12 @@ public class Main {
 		for (int i = 0; i < data.length; i++) {
 			bst.add(data[i]);
 		}
+//		BinaryTrees.println(bst);
+//		bst.reverseTree();
+//		sep();
 		BinaryTrees.println(bst);
-		bst.reverseTree();
 		sep();
-		BinaryTrees.println(bst);
-		sep();
-		bst.postorderTraversal4();
+		bst.preorderTraversal3();
 		sep();
 	}
 	
