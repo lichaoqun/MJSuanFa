@@ -1,21 +1,18 @@
-package com.lcq;
+import printer.BinaryTreeInfo;
 
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-import com.lcq.printer.BinaryTreeInfo;
-
-public class BinarySearchTree <E> implements BinaryTreeInfo{
+public class BSTree<E> implements BinaryTreeInfo{
 	
 	// - 节点类
-	private static class Node<E> {
+	public static class Node<E> {
 		E element;
 		Node <E> left;
 		Node <E> right;
 		Node <E> parent;
-		
 		public Node (E element, Node<E>parent) {
 			this.element = element;
 			this.parent = parent;
@@ -59,11 +56,11 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 	private Comparator <E> comparator;
 	
 	// - 初始化方法
-	public BinarySearchTree() {
+	public BSTree() {
 		this(null);
 	}
 	
-	public BinarySearchTree(Comparator <E> comparator) {
+	public BSTree(Comparator <E> comparator) {
 		this.comparator = comparator;
 	}
 	
@@ -93,6 +90,9 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		if(root == null) {
 			root = new Node<>(element, null);
 			size++;
+
+			// - 各自的子类各自实现
+			afterAdd(root);
 			return;
 		}
 		
@@ -121,8 +121,16 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		
 		// - 增加节点数量
 		size++;
+
+		// - 各自的子类各自实现
+		afterAdd(root);
 	}
-	
+
+	protected void afterAdd(Node<E>node) { }
+	protected Node<E>initNode(E element, Node<E>parent){
+		return new Node<E>(element, parent);
+	}
+
 	public void remove(E element) {
 		remove(node(element));
 	}
@@ -181,7 +189,7 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		}
 	}
 	
-	// - 中序遍历 中序遍历二叉搜索树的顺序, 就是元素从小到大排列的顺序
+	// - 中序遍历
 	public void inorderTraversal1() {
 		inorderTraversal1(root);
 	}
