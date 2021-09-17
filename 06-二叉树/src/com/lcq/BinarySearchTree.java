@@ -463,11 +463,13 @@ public class BinarySearchTree <E> implements BinaryTreeInfo{
 		return node.parent;
 	}
 
-	/**
+	/** 删除节点
 	 * 设 待删除节点为 node;
 	 * 1. 如果节点的度为2, 找到node的前驱/后继节点(tempNode), 然后将node.element替换为tempNode.element, 然后将tempNode标记为待删除的节点(node = tempNode).(如果一个节点的度为2, 那么这个节点的前驱/后继节点的度一定为1/0)
 	 * 2. 如果节点的度为1, 用子节点(subNode)替换node的位置(subNode.parent = node.parent), 父节点(parentNode)的子节点设置为subNode(node.parent.left = subNode / node.parent.right = subNode;)
 	 * 3. 如果节点的度为0, 判断当前的节点是父节点的左/右子节点, 直接将父节点的左/右节 置位 null;
+	 * 4. 度为2的节点查找前驱节点/后继节点 就是就是为了找到一个和被删除的节点的值最相近的节点替换自己.
+	 * 5. 度为1的节点其实也是可以查找前驱/后继节点, 然后删除对应的节点的. 只是可能查找到的结果还是度为1的节点, 这样整个过程就比较复杂了
 	 */
 	private void remove(Node<E> node) {
 		if (node == null) return;

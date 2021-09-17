@@ -5,6 +5,7 @@ import java.util.Comparator;
 * 因为当一个节点, 那么添加childNode之前 parentNode的度一定是1/0;
 * 如果parentNode的度是0, 新增 childNode一定不会导致失衡
 * 如果parentNode的度是1, 新增 childNode只会使parentNode的度变为2, 更不会失衡.
+* 所谓的左旋右旋其实就是为了找到失衡的节点g, 然后查找g的子节点f, g的孙子节点n, 然后找到三个节点中的中间值得节点, 然后左子树为较小的节点, 右子树为较大的节点.
 * */
 
 public class AVLTree<E> extends BSTree <E>{
